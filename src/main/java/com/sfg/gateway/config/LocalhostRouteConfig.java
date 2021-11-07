@@ -4,7 +4,9 @@ import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
+@Profile("!local-discovery")
 @Configuration
 public class LocalhostRouteConfig {
 
@@ -17,10 +19,10 @@ public class LocalhostRouteConfig {
             .id("beer-service"))
         .route(r -> r.path("/api/v1/customers/**")
             .uri("http://localhost:8081")
-            .id("beer-order-service"))
+            .id("order-service"))
         .route(r -> r.path("api/v1/beer/*/inventory")
-            .uri("http://localhost:8081")
-            .id("beer-order-service"))
+            .uri("http://localhost:8082")
+            .id("inventory-service"))
         .build();
   }
 }
